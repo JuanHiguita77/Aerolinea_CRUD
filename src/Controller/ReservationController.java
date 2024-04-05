@@ -134,15 +134,30 @@ public class ReservationController
         Date reservationDate = Date.valueOf(JOptionPane.showInputDialog("Insert Reservation Date"));
         int fk_id_fly = Integer.parseInt(JOptionPane.showInputDialog(planeModel.list() + "\n Insert Plane ID"));
 
-        //falta funcion para saber cuales estan disponibles segun el id del vuelo
+        if (!reservationModel.airplaneCapacity(fk_id_fly))
+        {
+            JOptionPane.showMessageDialog(null, "Exced the Airplane capacity");
+            return;
+        }
 
-        String seat = JOptionPane.showInputDialog("Insert Seat Reservation");//Listar los puestos disponibles
+        String seat = JOptionPane.showInputDialog("Insert Seat Reservation");
         int fk_id_passenger = Integer.parseInt(JOptionPane.showInputDialog(pasengerModel.list() + "\n Insert Passenger ID"));
 
         reservation.setReservation_date(reservationDate);
         reservation.setFk_id_fly(fk_id_fly);
         reservation.setSeat(seat);
         reservation.setFk_id_pasenger(fk_id_passenger);
+
+        Pasajero passengerFinded = pasengerModel.findById(fk_id_passenger);
+        Vuelo planeFinded = planeModel.findById(fk_id_fly);
+
+        reservation.setPassenger_name(passengerFinded.getName());
+        reservation.setPassenger_surname(passengerFinded.getSurname());
+        reservation.setPassenger_document(passengerFinded.getPasenger_document());
+
+        reservation.setDestination(planeFinded.getDestiny());
+        reservation.setOut_date(planeFinded.getOut_date());
+        reservation.setOut_time(planeFinded.getOut_hour());
 
         reservation = (Reservacion) reservationModel.create(reservation);
 

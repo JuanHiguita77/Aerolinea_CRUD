@@ -270,4 +270,53 @@ public class ReservationModel implements CRUD
 
         return reservationList;
     }
+
+    public boolean airplaneCapacity(int id_airplane)
+    {
+        Connection conexion = ConfigDB.openConnection();
+
+        Reservacion reservation = null;
+
+        int airplaneCapacity = 0;
+        int ocupedSeats = 0;
+
+        try
+        {
+            String sqlCapacity = " SELECT capacidad FROM vuelo JOIN avion ON vuelo.fk_id_avion = avion.id_avion WHERE vuelo.id_vuelo = ?";
+            String sqlSeatOcuped = "SELECT COUNT(*) AS asientos_ocupados FROM reservacion WHERE fk_id_vuelo = ?";
+
+            PreparedStatement preparedStatementcapacity = conexion.prepareStatement(sqlCapacity);
+            PreparedStatement preparedStatementOcupedSeats = conexion.prepareStatement(sqlSeatOcuped);
+
+
+            //Le pasamos el ID al query
+            preparedStatementcapacity.setInt(1, id_airplane);
+
+            ResultSet resultCapacity = preparedStatementcapacity.executeQuery();
+
+
+            if (resultCapacity.next()) {
+                airplaneCapacity = resultCapacity.getInt("capacidad");
+            }
+
+            preparedStatementOcupedSeats.setInt(1, id_airplane);
+
+            ResultSet resultOcuped = preparedStatementOcupedSeats.executeQuery();
+
+
+            if (resultOcuped.next())
+            {
+                ocupedSeats = resultOcuped.getInt("asientos_ocupados");
+            }
+
+        }
+        catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Reservation capacity filter model error" + e.getMessage());
+        }
+
+        ConfigDB.closeConnection();
+
+        return ocupedSeats < airplaneCapacity;
+    }
 }
