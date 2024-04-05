@@ -30,6 +30,7 @@ public class PlaneController
     public static String listAllPlans()
     {
         PlaneModel planeModel = new PlaneModel();
+
         String listPlanes = "PLANES LIST \n";
 
         for (Object plane: planeModel.list())
@@ -147,22 +148,22 @@ public class PlaneController
 
         String destiny = JOptionPane.showInputDialog("Input the Plane Destination to search");
 
-        Vuelo pasengerReceived = planeModel.findByName(destiny);
-        Avion planeReceived = airplaneModel.findById(pasengerReceived.getFk_id_airplane());
+        Vuelo airplaneReceived = planeModel.findByName(destiny);
+        Avion planeReceived = airplaneModel.findById(airplaneReceived.getFk_id_airplane());
 
-        if (pasengerReceived == null)
+        if (airplaneReceived == null)
         {
             JOptionPane.showMessageDialog(null, "Destination not available");
         }
         else
         {
-            plane.setId_fly(pasengerReceived.getId_fly());
-            plane.setDestiny(pasengerReceived.getDestiny());
-            plane.setOut_date(pasengerReceived.getOut_date());
-            plane.setOut_hour(pasengerReceived.getOut_hour());
-            plane.setFk_id_airplane(pasengerReceived.getFk_id_airplane());
+            plane.setId_fly(airplaneReceived.getId_fly());
+            plane.setDestiny(airplaneReceived.getDestiny());
+            plane.setOut_date(airplaneReceived.getOut_date());
+            plane.setOut_hour(airplaneReceived.getOut_hour());
+            plane.setFk_id_airplane(airplaneReceived.getFk_id_airplane());
 
-            JOptionPane.showMessageDialog(null, plane.toString() + planeReceived.toString());
+            JOptionPane.showMessageDialog(null, plane.toString() + " " + planeReceived.toString());
         }
     }
 }

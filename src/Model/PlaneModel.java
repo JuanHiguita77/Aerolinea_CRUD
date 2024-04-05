@@ -238,6 +238,7 @@ public class PlaneModel implements CRUD
                 plane = new Vuelo();
 
                 plane.setId_fly(resultado.getInt("id_vuelo"));
+                plane.setDestiny(resultado.getString("destino"));
                 plane.setOut_date(resultado.getDate("fecha_salida"));
                 plane.setOut_hour(resultado.getTime("hora_salida"));
                 plane.setFk_id_airplane(resultado.getInt("fk_id_avion"));

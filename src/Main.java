@@ -2,6 +2,7 @@
 import Controller.AirplaneController;
 import Controller.PasengerController;
 import Controller.PlaneController;
+import Controller.ReservationController;
 
 import javax.swing.JOptionPane;
 
@@ -12,9 +13,7 @@ public class Main {
         String pasengerOptionMenu;
         String airplaneOptionMenu;
         String planeOptionMenu;
-        String citeOptionMenu;
-
-        boolean exit = false;
+        String reservationOptionMenu;
 
         do
         {
@@ -22,7 +21,7 @@ public class Main {
                     1 - Pasengers Menu
                     2 - Airplanes Menu
                     3 - Plane Menu
-                    4 - Cites Menu
+                    4 - Reservation Menu
                     5 - Exit
                     """);
 
@@ -61,12 +60,8 @@ public class Main {
                                 case "5":
                                     PasengerController.delete();
                                     break;
-
-                                case "6":
-                                    exit = true;
-                                    break;
                             }
-                        }while (!exit);
+                        }while (!pasengerOptionMenu.equals("6"));
 
                 break;
 
@@ -98,13 +93,9 @@ public class Main {
                                 case "4":
                                     AirplaneController.delete();
                                     break;
-
-                                case "5":
-                                    exit = true;
-                                    break;
                             }
-                        }while (!exit);
-                break;
+                        }while (!airplaneOptionMenu.equals("5"));
+                    break;
 
                 case "3":
                     do
@@ -139,53 +130,45 @@ public class Main {
                             case "5":
                                 PlaneController.delete();
                                 break;
-
-                            case "6":
-                                exit = true;
-                                break;
                         }
-                    }while (!exit);
+                    }while (!planeOptionMenu.equals("6"));
                     break;
-                /*case "4":
+                case "4":
                     do
                     {
-                        citeOptionMenu = JOptionPane.showInputDialog("""
-                                    1 - List All Cites
-                                    2 - Search By Cite Date
-                                    3 - Add New Cite
-                                    4 - Update Cite
-                                    5 - Delete Cite
-                                    6 - Exit Cites Menu
+                        reservationOptionMenu = JOptionPane.showInputDialog("""
+                                    1 - List All Reservations
+                                    2 - Search Reservation per Plane
+                                    3 - Add New Reservation
+                                    4 - Update Reservation
+                                    5 - Delete Reservation
+                                    6 - Exit Reservation Menu
                                     """);
 
-                        switch (citeOptionMenu)
+                        switch (reservationOptionMenu)
                         {
                             case "1":
-                                CitaController.listCites();
+                                ReservationController.listReservations();
                                 break;
 
                             case "2":
-                                CitaController.findByDate();
+                                ReservationController.findAllReservationInPlane();
                                 break;
 
                             case "3":
-                                CitaController.create();
+                                ReservationController.create();
                                 break;
 
                             case "4":
-                                CitaController.update();
+                                ReservationController.update();
                                 break;
 
                             case "5":
-                                CitaController.delete();
-                                break;
-
-                            case "6":
-                                exit = true;
+                                ReservationController.delete();
                                 break;
                         }
-                    }while (!exit);
-                    break;*/
+                    }while (!reservationOptionMenu.equals("6"));
+                break;
             }
         }while(!optionPrincipalMenu.equals("5"));
     }
